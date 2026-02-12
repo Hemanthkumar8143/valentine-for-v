@@ -152,6 +152,12 @@ button {
   <p>You make my world softer, brighter and slightly dramatic 😌</p>
   <h1>Will You Be My Valentine? 💌</h1>
 
+  <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:20px;">
+
+  <img src="proposal.jpg"
+       style="width:230px; border-radius:20px; box-shadow:0 0 15px rgba(0,0,0,0.2);">
+  </div>
+
   <div class="buttons">
     <button id="yes">Yes Hemu ❤️</button>
     <button id="no">No 😜</button>
@@ -210,7 +216,7 @@ noBtn.onclick = function() {
 
     // Add glow to YES
     yesBtn.classList.add("glow");
-    yesBtn.innerText = "Say yes Vyshu ❤️, Please.....";
+    yesBtn.innerText = "Say yes Vyshu ❤️";
 
   }
 
@@ -241,17 +247,22 @@ yesBtn.onclick = function() {
 
   setTimeout(()=>{
 
-    mainContent.innerHTML = `
-      <h1>She said YESSS 😭❤️</h1>
-      <h2>You just made me the happiest person alive 💕</h2>
-      <p style="max-width:650px;">
+mainContent.innerHTML = `
+  <h1>She said YESSS 😭❤️</h1>
+  <h2>You just made Hemu the happiest person alive 💕</h2>
+
+  <img src="yess.gif"
+       style="width:300px; margin-top:25px; border-radius:20px;">
+
+  <p style="max-width:650px;">
         Vyshu, you mean more to me than words can explain.
         You make my days brighter, my stress lighter,
         and my heart fuller.
         Thank you for being you ❤️
       </p>
-      <div class="big-love">💖💘💝</div>
-    `;
+
+  <div class="big-love">💖💘💝</div>
+`;
 
     mainContent.style.opacity = "1";
 
