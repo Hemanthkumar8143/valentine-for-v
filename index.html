@@ -12,16 +12,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100dvh;          /* FIX */
+  height: 100vh;
   text-align: center;
-  overflow-x: hidden;          /* FIX */
+  overflow: hidden;
 }
 
 /* Sparkle background */
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  width: 100%;
+  height: 100%;
   background-image: radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px);
   background-size: 28px 28px;
   animation: sparkle 4s linear infinite;
@@ -35,7 +36,6 @@ body::before {
 .container {
   width: 90%;
   max-width: 650px;
-  padding: 40px 20px 100px;   /* FIX */
   transition: opacity 0.6s ease;
 }
 
@@ -63,33 +63,41 @@ button {
 #yes { background:#ff4d6d; color:white; }
 #no  { background:#333; color:white; }
 
-/* YES Glow */
+/* YES Glow after heartbreak */
 .glow {
   animation: glowPulse 1.5s infinite alternate;
+  box-shadow: 0 0 15px #ff4d6d, 0 0 30px #ff85a2;
 }
+
 @keyframes glowPulse {
-  from { transform: scale(1); box-shadow:0 0 10px #ff4d6d; }
-  to   { transform: scale(1.1); box-shadow:0 0 30px #ff85a2; }
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
 }
 
 /* Flash */
 .flash {
   position: fixed;
-  inset:0;
+  width:100%;
+  height:100%;
   background:white;
+  top:0;
+  left:0;
+  opacity:0;
   animation: flashAnim 0.2s ease;
 }
 @keyframes flashAnim {
-  from { opacity:0.9; }
-  to   { opacity:0; }
+  0% { opacity:0.9; }
+  100% { opacity:0; }
 }
 
 /* Vibration */
 .vibrate { animation: vibrate 0.3s linear; }
 @keyframes vibrate {
+  0%{transform:translate(0);}
   25%{transform:translate(-3px,3px);}
   50%{transform:translate(3px,-3px);}
   75%{transform:translate(-3px,3px);}
+  100%{transform:translate(0);}
 }
 
 /* Floating hearts */
@@ -99,8 +107,8 @@ button {
   animation: float 4s linear infinite;
 }
 @keyframes float {
-  from{transform:translateY(0);opacity:1;}
-  to{transform:translateY(-100vh);opacity:0;}
+  0%{transform:translateY(0);opacity:1;}
+  100%{transform:translateY(-600px);opacity:0;}
 }
 
 /* Confetti */
@@ -121,12 +129,18 @@ button {
   animation: blast 1.2s ease-out forwards;
 }
 @keyframes blast {
-  to{transform:translate(var(--x),var(--y));opacity:0;}
+  0%{transform:translate(0,0);opacity:1;}
+  100%{transform:translate(var(--x),var(--y));opacity:0;}
 }
 
 .big-love {
-  font-size:72px;             /* FIX (smaller) */
+  font-size:100px;
   margin-top:20px;
+  animation:bounce 1s infinite alternate;
+}
+@keyframes bounce {
+  from{transform:translateY(0);}
+  to{transform:translateY(-15px);}
 }
 </style>
 </head>
@@ -138,7 +152,11 @@ button {
   <p>You make my world softer, brighter and slightly dramatic 😌</p>
   <h1>Will You Be My Valentine? 💌</h1>
 
-  <img src="proposal.jpg" style="width:230px;border-radius:20px;">
+  <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:20px;">
+
+  <img src="proposal.jpg"
+       style="width:230px; border-radius:20px; box-shadow:0 0 15px rgba(0,0,0,0.2);">
+  </div>
 
   <div class="buttons">
     <button id="yes">Yes Hemu ❤️</button>
@@ -147,16 +165,17 @@ button {
 </div>
 
 <audio id="popSound">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+
 const yesBtn = document.getElementById("yes");
 const noBtn  = document.getElementById("no");
 const mainContent = document.getElementById("mainContent");
 const popSound = document.getElementById("popSound");
 
-const noTexts = [
+let noTexts = [
   "Are you sure? 🥺",
   "Think again Vyshu 😭",
   "Pleaseee 💕",
@@ -168,107 +187,135 @@ let count = 0;
 let yesScale = 1;
 
 /* NO BUTTON */
-noBtn.onclick = () => {
+noBtn.onclick = function() {
 
-  yesScale += 0.2;
-  yesBtn.style.transform = `scale(${yesScale})`;
+  yesScale += 0.3;
+  yesBtn.style.transform = "scale(" + yesScale + ")";
 
-  if (count < noTexts.length) {
+  if(count < noTexts.length - 1){
     noBtn.innerText = noTexts[count];
     count++;
+  } 
+  else if(count === noTexts.length - 1){
+    noBtn.innerText = noTexts[count];
+    count++;
+  }
+  else {
+    noBtn.style.display = "none";
 
-    // Move button
-    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-    const maxY = window.innerHeight - noBtn.offsetHeight - 120;
+    const brokenHeart = document.createElement("div");
+    brokenHeart.innerHTML = "💔";
+    brokenHeart.style.fontSize = "100px";
+    brokenHeart.style.marginTop = "20px";
+
+    const sadText = document.createElement("h2");
+    sadText.innerHTML = "Vyshu… that actually hurt 😢";
+
+    mainContent.appendChild(brokenHeart);
+    mainContent.appendChild(sadText);
+
+    // Add glow to YES
+    yesBtn.classList.add("glow");
+    yesBtn.innerText = "Say yes Vyshu ❤️";
+
+  }
+
+  if(noBtn.style.display !== "none"){
+    const maxX = window.innerWidth - noBtn.offsetWidth - 40;
+    const maxY = window.innerHeight - noBtn.offsetHeight - 150;
+
     noBtn.style.position = "fixed";
     noBtn.style.left = Math.random()*maxX + "px";
     noBtn.style.top  = Math.random()*maxY + "px";
-
-    // Final step
-    if (count === noTexts.length) {
-      noBtn.style.display = "none";
-
-      const brokenHeart = document.createElement("div");
-      brokenHeart.style.fontSize = "90px";
-      brokenHeart.innerHTML = "💔";
-
-      const sadText = document.createElement("h2");
-      sadText.innerText = "Vyshu… that actually hurt 😢";
-
-      mainContent.append(brokenHeart, sadText);
-
-      yesBtn.classList.add("glow");
-      yesBtn.innerText = "Say yes Vyshu ❤️";
-    }
   }
 };
 
 /* YES BUTTON */
-yesBtn.onclick = () => {
+yesBtn.onclick = function() {
 
-  document.body.appendChild(Object.assign(document.createElement("div"),{className:"flash"}));
+  const flash = document.createElement("div");
+  flash.className = "flash";
+  document.body.appendChild(flash);
+  setTimeout(()=>flash.remove(),200);
+
   document.body.classList.add("vibrate");
+  setTimeout(()=>document.body.classList.remove("vibrate"),300);
+
   popSound.play().catch(()=>{});
 
   mainContent.style.opacity = "0";
 
   setTimeout(()=>{
-    mainContent.innerHTML = `
-      <h1>She said YESSS 😭❤️</h1>
-      <h2>You just made Hemu the happiest person alive 💕</h2>
 
-      <img src="yess.gif" style="width:260px;border-radius:20px;">
+mainContent.innerHTML = `
+  <h1>She said YESSS 😭❤️</h1>
+  <h2>You just made Hemu the happiest person alive 💕</h2>
 
-      <p>
+  <img src="yess.gif"
+       style="width:300px; margin-top:25px; border-radius:20px;">
+
+  <p style="max-width:650px;">
         Vyshu, you mean more to me than words can explain.
         You make my days brighter, my stress lighter,
-        and my heart fuller. Thank you for being you ❤️
+        and my heart fuller.
+        Thank you for being you ❤️
       </p>
 
-      <div class="big-love">💖 💘 💝</div>
-    `;
+  <div class="big-love">💖💘💝</div>
+`;
+
     mainContent.style.opacity = "1";
-    startHearts(); launchConfetti(); launchBlast();
+
+    startHearts();
+    launchConfetti();
+    launchBlast();
+
   },500);
 };
 
 function startHearts(){
   setInterval(()=>{
-    const h=document.createElement("div");
-    h.className="heart"; h.innerHTML="❤️";
-    h.style.left=Math.random()*window.innerWidth+"px";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),4000);
-  },250);
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*window.innerWidth+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),4000);
+  },300);
 }
 
 function launchConfetti(){
-  for(let i=0;i<120;i++){
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*window.innerWidth+"px";
-    c.style.background=["#ff4d6d","#ffd166","#06d6a0","#118ab2","#ef476f"][Math.floor(Math.random()*5)];
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
+  for(let i=0;i<150;i++){
+    const piece=document.createElement("div");
+    piece.className="confetti";
+    piece.style.left=Math.random()*window.innerWidth+"px";
+    piece.style.top="-10px";
+    piece.style.background=["#ff4d6d","#ffd166","#06d6a0","#118ab2","#ef476f"][Math.floor(Math.random()*5)];
+    document.body.appendChild(piece);
+    setTimeout(()=>piece.remove(),3000);
   }
 }
 
 function launchBlast(){
-  const cx=window.innerWidth/2, cy=window.innerHeight/2;
-  for(let i=0;i<150;i++){
-    const b=document.createElement("div");
-    b.className="blast-piece";
-    b.style.left=cx+"px"; b.style.top=cy+"px";
-    b.style.background=["#ff4d6d","#ffd166","#06d6a0","#118ab2","#ef476f","#fff"][Math.floor(Math.random()*6)];
-    const a=Math.random()*Math.PI*2;
-    const d=Math.random()*300+120;
-    b.style.setProperty("--x",Math.cos(a)*d+"px");
-    b.style.setProperty("--y",Math.sin(a)*d+"px");
-    b.style.width="10px"; b.style.height="10px";
-    document.body.appendChild(b);
-    setTimeout(()=>b.remove(),1200);
+  const cx=window.innerWidth/2;
+  const cy=window.innerHeight/2;
+  for(let i=0;i<200;i++){
+    const piece=document.createElement("div");
+    piece.className="blast-piece";
+    piece.style.left=cx+"px";
+    piece.style.top=cy+"px";
+    piece.style.background=["#ff4d6d","#ffd166","#06d6a0","#118ab2","#ef476f","#ffffff"][Math.floor(Math.random()*6)];
+    const angle=Math.random()*2*Math.PI;
+    const dist=Math.random()*400+150;
+    piece.style.setProperty("--x",Math.cos(angle)*dist+"px");
+    piece.style.setProperty("--y",Math.sin(angle)*dist+"px");
+    piece.style.width="12px";
+    piece.style.height="12px";
+    document.body.appendChild(piece);
+    setTimeout(()=>piece.remove(),1200);
   }
 }
+
 </script>
 
 </body>
