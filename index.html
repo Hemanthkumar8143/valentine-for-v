@@ -4,164 +4,149 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Vyshu ❤️</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:'Poppins',sans-serif;
+background:#f8a5c2;
+overflow-x:hidden;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #f8a5c2;
-    overflow-x: hidden;
+/* Sparkle background */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background-image:radial-gradient(white 1px,transparent 1px);
+background-size:20px 20px;
+opacity:.2;
+z-index:-1;
 }
 
-/* Main Container */
-.container {
-    min-height: 100dvh;
-    padding: 40px 20px 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+.container{
+min-height:100dvh;
+padding:40px 20px 100px;
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+transition:.5s ease;
 }
 
-/* Sparkle Background */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image: radial-gradient(white 1px, transparent 1px);
-    background-size: 20px 20px;
-    opacity: 0.2;
-    z-index: -1;
+h1{font-size:34px;color:#6a1b3d;margin-bottom:10px}
+h2{font-size:28px;color:#6a1b3d;margin:20px 0}
+p{color:#6a1b3d;margin-bottom:15px;font-size:18px;max-width:500px}
+
+img{
+max-width:90%;
+border-radius:20px;
+margin:20px 0;
 }
 
-/* Headings */
-h1 {
-    font-size: 36px;
-    font-weight: 700;
-    color: #6a1b3d;
-    margin-bottom: 10px;
+button{
+padding:15px 30px;
+font-size:18px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+margin:10px;
+transition:.3s ease;
 }
 
-h2 {
-    font-size: 28px;
-    font-weight: 600;
-    color: #6a1b3d;
-    margin: 20px 0;
+.yes-btn{
+background:#ff4d6d;
+color:white;
+box-shadow:0 8px 20px rgba(255,77,109,.4);
 }
 
-p {
-    font-size: 18px;
-    color: #6a1b3d;
-    margin-bottom: 20px;
-    max-width: 500px;
+.no-btn{
+background:#333;
+color:white;
+position:relative;
 }
 
-/* Images */
-img {
-    max-width: 90%;
-    height: auto;
-    border-radius: 20px;
-    margin: 20px 0;
+.yes-btn.glow{
+animation:glow 1.2s infinite alternate;
 }
 
-/* Buttons */
-button {
-    padding: 16px 32px;
-    font-size: 18px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    margin: 15px 10px;
-    transition: 0.3s ease;
+@keyframes glow{
+from{box-shadow:0 0 10px #ff4d6d}
+to{box-shadow:0 0 25px #ff4d6d}
 }
 
-.yes-btn {
-    background: #ff4d6d;
-    color: white;
-    box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
+.broken-heart{
+font-size:90px;
+display:none;
+animation:pop .5s ease forwards;
 }
 
-.no-btn {
-    background: #333;
-    color: white;
+@keyframes pop{
+from{transform:scale(.5);opacity:0}
+to{transform:scale(1);opacity:1}
 }
 
-.yes-btn:hover {
-    transform: scale(1.05);
+.shake{
+animation:shake .4s;
 }
 
-/* Broken Heart */
-.broken-heart {
-    font-size: 80px;
-    margin-top: 20px;
-    display: none;
+@keyframes shake{
+0%,100%{transform:translateX(0)}
+25%{transform:translateX(-5px)}
+75%{transform:translateX(5px)}
 }
 
-/* Celebration Section */
-.celebration {
-    display: none;
-    animation: fadeIn 1s ease forwards;
+.fade-out{
+opacity:0;
+transform:scale(.95);
 }
 
-/* Floating Hearts */
-.heart {
-    position: fixed;
-    bottom: -50px;
-    font-size: 24px;
-    animation: floatUp 6s linear infinite;
-    opacity: 0.8;
+.celebration{
+display:none;
+animation:fadeIn 1s ease forwards;
 }
 
-@keyframes floatUp {
-    0% { transform: translateY(0); opacity: 0; }
-    30% { opacity: 1; }
-    100% { transform: translateY(-110vh); opacity: 0; }
+@keyframes fadeIn{
+from{opacity:0;transform:scale(.95)}
+to{opacity:1;transform:scale(1)}
+}
+
+/* Hearts */
+.heart{
+position:fixed;
+bottom:-50px;
+font-size:24px;
+animation:floatUp 6s linear infinite;
+opacity:.8;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0);opacity:0}
+30%{opacity:1}
+100%{transform:translateY(-110vh);opacity:0}
 }
 
 /* Confetti */
-.confetti {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background: red;
-    top: -10px;
-    animation: confettiFall 4s linear infinite;
+.confetti{
+position:fixed;
+width:8px;
+height:8px;
+top:-10px;
+animation:confettiFall 4s linear infinite;
 }
 
-@keyframes confettiFall {
-    0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(110vh) rotate(360deg); }
+@keyframes confettiFall{
+0%{transform:translateY(0) rotate(0deg)}
+100%{transform:translateY(110vh) rotate(360deg)}
 }
 
-/* Fade */
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-
-    h1 { font-size: 28px; }
-    h2 { font-size: 22px; }
-    p { font-size: 16px; }
-
-    button {
-        width: 90%;
-        margin: 10px 0;
-    }
-
-    img {
-        max-width: 95%;
-    }
+/* Mobile */
+@media(max-width:480px){
+h1{font-size:26px}
+h2{font-size:22px}
+p{font-size:16px}
+button{width:90%}
 }
 
 </style>
@@ -170,81 +155,113 @@ button {
 
 <div class="container" id="main">
 
-    <h1>Hi Vyshu 💖</h1>
-    <p>You make my world softer, brighter and slightly dramatic 😌</p>
+<h1>Hi Vyshu 💖</h1>
+<p>You make my world softer, brighter and slightly dramatic 😌</p>
 
-    <h2>Will You Be My Valentine? 💌</h2>
+<h2>Will You Be My Valentine? 💌</h2>
 
-    <img src="proposal.jpg" alt="cute proposal">
+<img src="proposal.jpg">
 
-    <div>
-        <button class="yes-btn" onclick="sayYes()">Yes Hemu ❤️</button>
-        <button class="no-btn" onclick="sayNo()">No 😜</button>
-    </div>
+<div>
+<button id="yesBtn" class="yes-btn glow" onclick="sayYes()">Yes Hemu ❤️</button>
+<button id="noBtn" class="no-btn" onclick="sayNo()">No 😜</button>
+</div>
 
-    <div class="broken-heart" id="brokenHeart">💔</div>
-    <p id="hurtText" style="display:none; font-weight:600;">Vyshu… that actually hurt 😢</p>
+<div id="brokenHeart" class="broken-heart">💔</div>
+<p id="hurtText" style="display:none;font-weight:600;">Vyshu… that actually hurt 😢</p>
 
 </div>
 
 <div class="container celebration" id="celebration">
 
-    <h1>She said YESSS 😭❤️</h1>
-    <h2>You just made Hemu the happiest person alive 💕</h2>
+<h1>She said YESSS 😭❤️</h1>
+<h2>You just made Hemu the happiest person alive 💕</h2>
 
-    <img src="yess.gif" alt="celebration gif">
+<img src="yess.gif">
 
-    <p>
-        Vyshu, you mean more to me than words can explain.
-        You make my days brighter, my stress lighter,
-        and my heart fuller. Thank you for being you ❤️
-    </p>
+<p>
+Vyshu, you mean more to me than words can explain.
+You make my days brighter, my stress lighter,
+and my heart fuller. Thank you for being you ❤️
+</p>
 
 </div>
 
 <script>
 
-/* YES */
-function sayYes() {
-    document.getElementById("main").style.display = "none";
-    document.getElementById("celebration").style.display = "flex";
-    createConfetti();
-    createHearts();
+let noTexts=[
+"No 😜",
+"Are you sure? 🥺",
+"Think again Vyshu 😭",
+"Pleaseee 💕",
+"Last chance 😔",
+"Don’t break my heart 💔"
+];
+
+let clickCount=0;
+let yesScale=1;
+
+function sayNo(){
+let noBtn=document.getElementById("noBtn");
+let yesBtn=document.getElementById("yesBtn");
+
+if(clickCount<noTexts.length){
+noBtn.innerText=noTexts[clickCount];
+clickCount++;
+
+yesScale+=0.1;
+yesBtn.style.transform="scale("+yesScale+")";
+
+moveButton(noBtn);
+
+if(noBtn.innerText==="Don’t break my heart 💔"){
+noBtn.classList.add("shake");
+document.getElementById("brokenHeart").style.display="block";
+document.getElementById("hurtText").style.display="block";
+}
+}
 }
 
-/* NO */
-function sayNo() {
-    document.getElementById("brokenHeart").style.display = "block";
-    document.getElementById("hurtText").style.display = "block";
+function moveButton(btn){
+let x=Math.random()*200-100;
+let y=Math.random()*100-50;
+btn.style.transform="translate("+x+"px,"+y+"px)";
 }
 
-/* Hearts */
-function createHearts() {
-    for (let i = 0; i < 20; i++) {
-        let heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-        document.body.appendChild(heart);
+function sayYes(){
+document.getElementById("main").classList.add("fade-out");
 
-        setTimeout(() => heart.remove(), 6000);
-    }
+setTimeout(()=>{
+document.getElementById("main").style.display="none";
+document.getElementById("celebration").style.display="flex";
+createConfetti();
+createHearts();
+},400);
 }
 
-/* Confetti */
-function createConfetti() {
-    for (let i = 0; i < 40; i++) {
-        let confetti = document.createElement("div");
-        confetti.className = "confetti";
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.backgroundColor =
-            ["#ff4d6d", "#ffafcc", "#ffc8dd", "#cdb4db"][Math.floor(Math.random()*4)];
-        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
-        document.body.appendChild(confetti);
+function createHearts(){
+for(let i=0;i<20;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+}
+}
 
-        setTimeout(() => confetti.remove(), 5000);
-    }
+function createConfetti(){
+for(let i=0;i<40;i++){
+let confetti=document.createElement("div");
+confetti.className="confetti";
+confetti.style.left=Math.random()*100+"vw";
+confetti.style.backgroundColor=
+["#ff4d6d","#ffafcc","#ffc8dd","#cdb4db"][Math.floor(Math.random()*4)];
+confetti.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(confetti);
+setTimeout(()=>confetti.remove(),5000);
+}
 }
 
 </script>
