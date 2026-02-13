@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+h1 { font-size: clamp(28px, 5vw, 48px); }
+h2 { font-size: clamp(22px, 4vw, 32px); }
+p  { font-size: clamp(18px, 3.5vw, 22px); }
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -12,10 +16,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100dvh;   /* change from 100vh */
   text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;   /* prevents side cut */
 }
+
 
 /* Sparkle background */
 body::before {
@@ -36,7 +41,8 @@ body::before {
 .container {
   width: 90%;
   max-width: 650px;
-  transition: opacity 0.6s ease;
+  padding: 40px 20px 120px;  /* add bottom padding */
+  box-sizing: border-box;
 }
 
 h1 { font-size: clamp(30px,4vw,48px); color:#5a0f2e; }
@@ -47,8 +53,8 @@ p  { font-size: clamp(18px,2.5vw,22px); color:#5a0f2e; }
   margin-top: 30px;
   display: flex;
   justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
+  gap: 20px;
+  flex-wrap: wrap;   /* THIS IS IMPORTANT */
 }
 
 button {
@@ -154,8 +160,7 @@ button {
 
   <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:20px;">
 
-  <img src="proposal.jpg"
-       style="width:230px; border-radius:20px; box-shadow:0 0 15px rgba(0,0,0,0.2);">
+  <img src="proposal.jpg" style="width:90%; max-width:280px; border-radius:20px;">
   </div>
 
   <div class="buttons">
@@ -221,7 +226,7 @@ noBtn.onclick = function() {
   }
 
   if(noBtn.style.display !== "none"){
-    const maxX = window.innerWidth - noBtn.offsetWidth - 40;
+    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
     const maxY = window.innerHeight - noBtn.offsetHeight - 150;
 
     noBtn.style.position = "fixed";
@@ -251,8 +256,7 @@ mainContent.innerHTML = `
   <h1>She said YESSS 😭❤️</h1>
   <h2>You just made Hemu the happiest person alive 💕</h2>
 
-  <img src="yess.gif"
-       style="width:300px; margin-top:25px; border-radius:20px;">
+<img src="yess.gif" style="width:90%; max-width:300px; border-radius:20px;">
 
   <p style="max-width:650px;">
         Vyshu, you mean more to me than words can explain.
